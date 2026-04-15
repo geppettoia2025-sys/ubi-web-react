@@ -1,0 +1,23 @@
+.map-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.62;
+  background: transparent;
+}
+
+/* Garantizar que no interfiera con contenido */
+.map-background * {
+  pointer-events: none;
+}
+
+/* Responsive: mantener opacidad visible en mobile */
+@media (max-width: 768px) {
+  .map-background {
+    opacity: 0.42;
+  }
+}
