@@ -1051,7 +1051,7 @@ function App() {
         </div>
       </motion.section>
 
-      <footer className="site-footer">
+      <footer id="footer" className="site-footer">
         <div className="site-footer-inner">
           <div className="site-footer-text">
             <p>© {new Date().getFullYear()} Ubi. Todos los derechos reservados.</p>
