@@ -141,7 +141,9 @@ function App() {
         const el = document.getElementById(id);
 
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          const yOffset = -120;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
           hasScrolledToHashRef.current = true;
         } else if (attempts < maxAttempts && !hasScrolledToHashRef.current) {
           attempts++;
