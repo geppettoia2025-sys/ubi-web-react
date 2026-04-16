@@ -25,6 +25,8 @@ function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const carouselRef = useRef(null);
+  const hasScrolledToHashRef = useRef(false);
+  const lastHashRef = useRef("");
   const carouselRepeatCount = 6;
 
   const fetchBusinesses = async () => {
@@ -115,9 +117,39 @@ function App() {
   useEffect(() => {
     const handleScrollToHash = () => {
       const hash = window.location.hash;
-      if (!hash) return;
+      if (!hash) {
+        hasScrolledToHashRef.current = false;
+        lastHashRef.current = "";
+        return;
+      }
 
-      return;
+      if (lastHashRef.current !== hash) {
+        hasScrolledToHashRef.current = false;
+        lastHashRef.current = hash;
+      }
+
+      if (hasScrolledToHashRef.current) {
+        return;
+      }
+
+      const id = hash.replace('#', '');
+
+      let attempts = 0;
+      const maxAttempts = 15;
+
+      const tryScroll = () => {
+        const el = document.getElementById(id);
+
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          hasScrolledToHashRef.current = true;
+        } else if (attempts < maxAttempts && !hasScrolledToHashRef.current) {
+          attempts++;
+          setTimeout(tryScroll, 300);
+        }
+      };
+
+      setTimeout(tryScroll, 100);
     };
 
     handleScrollToHash();
