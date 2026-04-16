@@ -117,23 +117,7 @@ function App() {
       const hash = window.location.hash;
       if (!hash) return;
 
-      const id = hash.replace('#', '');
-
-      let attempts = 0;
-      const maxAttempts = 15;
-
-      const tryScroll = () => {
-        const el = document.getElementById(id);
-
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(tryScroll, 300);
-        }
-      };
-
-      setTimeout(tryScroll, 100);
+      return;
     };
 
     handleScrollToHash();
@@ -216,6 +200,10 @@ function App() {
 
   useEffect(() => {
     if (businesses.length === 0) {
+      return;
+    }
+
+    if (window.location.hash) {
       return;
     }
 
@@ -319,7 +307,9 @@ function App() {
   };
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   // Filtrar por ciudad y búsqueda
