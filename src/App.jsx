@@ -27,6 +27,7 @@ function App() {
   const carouselRef = useRef(null);
   const hasScrolledToHashRef = useRef(false);
   const lastHashRef = useRef("");
+  const initialHashRef = useRef(window.location.hash);
   const carouselRepeatCount = 6;
 
   const fetchBusinesses = async () => {
@@ -151,7 +152,7 @@ function App() {
         }
       };
 
-      setTimeout(tryScroll, 100);
+      setTimeout(tryScroll, 500);
     };
 
     handleScrollToHash();
@@ -237,7 +238,7 @@ function App() {
       return;
     }
 
-    if (window.location.hash) {
+    if (initialHashRef.current) {
       return;
     }
 
@@ -341,7 +342,7 @@ function App() {
   };
 
   const handleScrollTop = () => {
-    if (!window.location.hash) {
+    if (!initialHashRef.current) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
