@@ -26,8 +26,7 @@ function App() {
   const [legalOpen, setLegalOpen] = useState(false);
   const carouselRef = useRef(null);
   const hasScrolledToHashRef = useRef(false);
-  const lastHashRef = useRef("");
-  const initialHashRef = useRef(window.location.hash);
+  const hasHash = typeof window !== "undefined" && !!window.location.hash;
   const carouselRepeatCount = 6;
 
   const fetchBusinesses = async () => {
@@ -116,51 +115,28 @@ function App() {
   }, [businesses, selectedBusiness]);
 
   useEffect(() => {
-    const handleScrollToHash = () => {
-      const hash = window.location.hash;
-      if (!hash) {
-        hasScrolledToHashRef.current = false;
-        lastHashRef.current = "";
-        return;
+    if (!hasHash || hasScrolledToHashRef.current) {
+      return;
+    }
+
+    let attempts = 0;
+    const maxAttempts = 15;
+
+    const tryScroll = () => {
+      const el = document.querySelector(window.location.hash);
+
+      if (el) {
+        const yOffset = -120;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        hasScrolledToHashRef.current = true;
+      } else if (attempts < maxAttempts && !hasScrolledToHashRef.current) {
+        attempts++;
+        setTimeout(tryScroll, 300);
       }
-
-      if (lastHashRef.current !== hash) {
-        hasScrolledToHashRef.current = false;
-        lastHashRef.current = hash;
-      }
-
-      if (hasScrolledToHashRef.current) {
-        return;
-      }
-
-      const id = hash.replace('#', '');
-
-      let attempts = 0;
-      const maxAttempts = 15;
-
-      const tryScroll = () => {
-        const el = document.getElementById(id);
-
-        if (el) {
-          const yOffset = -120;
-          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-          hasScrolledToHashRef.current = true;
-        } else if (attempts < maxAttempts && !hasScrolledToHashRef.current) {
-          attempts++;
-          setTimeout(tryScroll, 300);
-        }
-      };
-
-      setTimeout(tryScroll, 500);
     };
 
-    handleScrollToHash();
-    window.addEventListener('hashchange', handleScrollToHash);
-
-    return () => {
-      window.removeEventListener('hashchange', handleScrollToHash);
-    };
+    setTimeout(tryScroll, 500);
   }, []);
 
   // Función auxiliar para obtener la ciudad del comercio
@@ -238,7 +214,7 @@ function App() {
       return;
     }
 
-    if (initialHashRef.current) {
+    if (hasHash) {
       return;
     }
 
@@ -304,7 +280,7 @@ function App() {
       window.removeEventListener("resize", measureCarousel);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [businesses.length, carouselRepeatCount]);
+  }, [businesses.length, carouselRepeatCount, hasHash]);
 
   // Función para validar contraseña del admin
   const handlePasswordSubmit = async (e) => {
@@ -342,7 +318,7 @@ function App() {
   };
 
   const handleScrollTop = () => {
-    if (!initialHashRef.current) {
+    if (!hasHash) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
