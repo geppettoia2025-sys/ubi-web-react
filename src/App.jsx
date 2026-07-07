@@ -23,7 +23,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("todos");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [legalOpen, setLegalOpen] = useState(false);
+  const [legalOpen, setLegalOpen] = useState(true);
   const carouselRef = useRef(null);
   const hasScrolledToHashRef = useRef(false);
   const hasHash = typeof window !== "undefined" && !!window.location.hash;
@@ -423,7 +423,7 @@ function App() {
     <section id="inicio" className="hero">
   
 <video autoPlay loop muted playsInline className="hero-video">
-  <source src="/video/ubi-banner.mp4" type="video/mp4" />
+    <source src="/video/ubi-banner2.mp4" type="video/mp4" />
 </video>
 
 
@@ -1022,6 +1022,41 @@ function App() {
               <div className="legal-block">
                 <h3>8. Aceptación de Términos</h3>
                 <p>Al utilizar la aplicación o el sitio web, el usuario acepta estas condiciones de uso.</p>
+              </div>
+
+              <div className="legal-block">
+                <h3>9. Solicitud de eliminación de datos</h3>
+                <p>En Ubi Brandsen respetamos la privacidad de nuestros usuarios. Si participaste en sorteos, completaste formularios o proporcionaste información personal y deseas que eliminemos tus datos, puedes solicitarlo por correo electrónico.</p>
+                
+                <h4 style={{ marginTop: '10px', fontWeight: '600' }}>Datos que pueden eliminarse:</h4>
+                <ul style={{ marginLeft: '20px', marginBottom: '10px' }}>
+                  <li>Nombre y apellido</li>
+                  <li>Correo electrónico</li>
+                  <li>Número de teléfono</li>
+                  <li>Registros de participación en sorteos</li>
+                  <li>Cualquier otro dato personal almacenado por Ubi Brandsen</li>
+                </ul>
+                
+                <h4 style={{ marginTop: '10px', fontWeight: '600' }}>Datos que podrían conservarse temporalmente:</h4>
+                <p style={{ fontSize: '0.95em', marginBottom: '10px' }}>Algunos registros podrán mantenerse durante el tiempo estrictamente necesario para cumplir obligaciones legales, administrativas o de seguridad.</p>
+                
+                <h4 style={{ marginTop: '10px', fontWeight: '600' }}>Cómo solicitar la eliminación:</h4>
+                <p style={{ marginBottom: '5px' }}>Enviar un correo electrónico a:</p>
+                <p style={{ fontWeight: '600', margin: '0 0 10px 0' }}>pinestudiocreativo@gmail.com</p>
+                
+                <p style={{ marginBottom: '5px' }}>Con el asunto:</p>
+                <p style={{ fontWeight: '600', marginBottom: '10px' }}>Solicitud de eliminación de datos</p>
+                
+                <h4 style={{ marginTop: '10px', fontWeight: '600' }}>Incluir:</h4>
+                <ul style={{ marginLeft: '20px', marginBottom: '10px' }}>
+                  <li>Nombre y apellido</li>
+                  <li>Correo electrónico utilizado</li>
+                  <li>Número de teléfono, si corresponde</li>
+                  <li>Descripción de los datos que desea eliminar</li>
+                </ul>
+                
+                <h4 style={{ marginTop: '10px', fontWeight: '600' }}>Tiempo de respuesta:</h4>
+                <p>Las solicitudes serán procesadas dentro de un plazo razonable posterior a su recepción y validación.</p>
               </div>
 
               <p className="legal-update">Última actualización: 2026</p>
